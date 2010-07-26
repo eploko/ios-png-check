@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrey Subbotin"]
-  s.date = %q{2010-07-15}
+  s.date = %q{2010-07-26}
   s.default_executable = ["ios-png-check"]
   s.description = %q{A simple utility to check that your @2x iOS PNG assets targeting iPhone 4 are in a good shape}
   s.email = %q{andrey@subbotin.me}
@@ -33,6 +33,11 @@ Gem::Specification.new do |s|
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
+
+    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    else
+    end
+  else
   end
 end
 
