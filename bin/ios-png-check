@@ -1,0 +1,88 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'fileutils'
+
+# Main block
+
+def main
+  files_wo_1x_version = []
+  files_wo_2x_version = []
+  size_errors = []
+  
+  png_files = Dir.glob('*.png') 
+  
+  png_files.each { |png_file|
+    name_parts = png_file.split(/[@\.]/)
+
+    v1x_exists = false
+    v2x_exists = false
+    
+    if name_parts.length == 3 then
+      v1_name = "#{name_parts[0]}.#{name_parts[2]}"
+      v2_name = "#{name_parts[0]}@2x.#{name_parts[2]}"
+      v1x_exists = File.exists?(v1_name)
+      v2x_exists = File.exists?(v2_name)
+      files_wo_1x_version << png_file unless v1x_exists
+      
+      if v1x_exists and v2x_exists then
+        v1_info = `file #{v1_name}`.match(/(\d+) x (\d+)/)
+        v2_info = `file #{v2_name}`.match(/(\d+) x (\d+)/)
+        v1w = v1_info[1].to_i
+        v1h = v1_info[2].to_i
+        v2w = v2_info[1].to_i
+        v2h = v2_info[2].to_i
+        v2w_expected = v1w * 2
+        v2h_expected = v1h * 2
+
+        if v2w != v2w_expected or v2h != v2h_expected then
+          size_errors << "#{v2_name}: SIZE IS #{v2w} x #{v2h}, EXPECTED #{v2w_expected} x #{v2h_expected}"
+        end
+      end      
+      
+    elsif name_parts.length == 2 then
+      v1_name = "#{name_parts[0]}.#{name_parts[1]}"
+      v2_name = "#{name_parts[0]}@2x.#{name_parts[1]}"
+      v1x_exists = File.exists?(v1_name)
+      v2x_exists = File.exists?(v2_name)
+      files_wo_2x_version << png_file unless v2x_exists
+    end
+  }
+  
+  if png_files.empty? then
+    puts "HEY, THERE'S NO PNG FILES IN THE CURRENT FOLDER."
+    return
+  end
+  
+  is_all_okay = true
+  
+  unless files_wo_1x_version.empty? then
+    puts "FILES WITHOUT @1x VERSION ============================================"
+    puts files_wo_1x_version
+    puts
+    is_all_okay = false
+  end
+  
+  unless files_wo_2x_version.empty? then
+    puts "FILES WITHOUT @2x VERSION ============================================"
+    puts files_wo_2x_version
+    puts
+    is_all_okay = false
+  end
+
+  unless size_errors.empty? then
+    puts "INVALID IMAGE SIZES DETECTED FOR THE FOLLOWING FILES ================="
+    puts size_errors
+    puts
+    is_all_okay = false
+  end
+  
+  if is_all_okay then
+    puts "YOUR PNG ASSETS IN THE CURRENT FOLDER ARE FINE, DUDE."
+  end
+  
+end
+
+# Aux methods
+
+main

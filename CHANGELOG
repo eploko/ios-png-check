@@ -1,0 +1,3 @@
+v1.1.0. Initial release.
+v1.4.0. Better command line options handling + Bugfixes.
+v1.5.0. Fixed a major bug in localization of XIB files.
