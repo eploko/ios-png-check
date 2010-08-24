@@ -2,7 +2,8 @@
 
 A simple utility to check that your @2x iOS PNG assets targeting iPhone 4 are in a good shape.
 
-Note: This is a ruby gem. If you want a Python version, you can find one in the `contrib/` folder. The Python version has been contributed by [Matt Galloway](http://iphone.galloway.me.uk/).
+Note: This is a ruby gem. A Python version can be found in the `contrib/` folder. 
+It has been kindly contributed by [Matt Galloway](http://iphone.galloway.me.uk/).
 
 ## How to Install
 
