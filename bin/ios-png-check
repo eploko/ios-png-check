@@ -14,6 +14,7 @@ def main
   
   png_files.each { |png_file|
     name_parts = png_file.split(/[@\.]/)
+    next if name_parts.include? "&"
 
     v1x_exists = false
     v2x_exists = false
