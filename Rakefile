@@ -13,6 +13,7 @@ begin
     gem.files =  FileList["[A-Z][A-Z]*"]
     gem.executables = ['ios-png-check']
     gem.default_executable = ['ios-png-check']
+    gem.add_dependency 'escape'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
